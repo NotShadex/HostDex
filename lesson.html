@@ -3,50 +3,119 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PowerShell Learning</title>
+<title>PowerShell Academy Journey</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#f3f6fb;
-  --card:#ffffff;
-  --muted:#6b7280;
-  --accent:#0ea5e9;
-  --radius:12px;
-  --container-width:980px;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial; background:var(--bg); color:#0f172a; -webkit-font-smoothing:antialiased}
-.container{max-width:var(--container-width);margin:36px auto;padding:18px}
-.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:grid;place-items:center;color:#fff;font-weight:700}
-.title{font-size:22px;font-weight:700}
-nav{display:flex;gap:16px}
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0ea5e9;
+      --accent-2:#3b82f6;
+      --radius:12px;
+      --max-width:950px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, sans-serif;
+      background:linear-gradient(180deg,#f9fcff, var(--bg));
+      color:#0f172a;
+      line-height:1.45;
+    }
+    .container{
+      max-width:var(--max-width);
+      margin:40px auto;
+      padding:0 20px;
+    }
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:24px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:grid;place-items:center;color:white;font-weight:700;font-size:18px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    }
+    nav{display:flex;gap:16px}
     nav a{
       text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;
       padding:8px 10px;border-radius:8px;
     }
     nav a:hover{color:var(--accent);background:rgba(14,165,233,0.08)}
 
-/* Card layout */
-.card{background:var(--card);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 10px 30px rgba(12,20,43,0.08);}
-.card h2{margin:0 0 10px;font-size:18px}
-.card p{color:var(--muted);margin:0 0 12px}
-.card pre{background:#0b1320;color:#e6eef8;padding:14px;border-radius:10px;overflow:auto;font-size:13px;margin:0}
-.code-explain{background:#f7fbff;border-left:4px solid var(--accent);padding:10px;border-radius:8px;margin-bottom:12px;color:#0b1724}
+    h1{font-size:34px;margin:10px 0}
+    h2{margin-top:34px;font-size:26px}
+    p.lead{color:var(--muted);font-size:16px;max-width:70ch}
 
-.footer{margin-top:22px;text-align:center;color:var(--muted);font-size:14px;padding:12px}
-.home-link{display:inline-block;margin-top:8px;background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none}
+    .card {
+    background: var(--card);
+    padding: 24px;               /* More padding inside cards */
+    border-radius: var(--radius);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08); /* stronger shadow for depth */
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 24px;         /* spacing between cards */
+    }
 
-@media (max-width:720px){.container{padding:12px}.header{flex-direction:column;align-items:flex-start}.topnav{flex-wrap:wrap}}
-</style>
+    .card h2 {
+    margin-top: 0;      /* remove top margin inside cards */
+    margin-bottom: 16px; /* keep some spacing below */
+    font-size: 26px;
+    }
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;                   /* more space between grid items */
+        margin-top: 24px;
+    }
+
+    .hero {
+        background: var(--card);
+        padding: 28px;               /* slightly more padding */
+        border-radius: var(--radius);
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08); /* softer but noticeable shadow */
+        margin-bottom: 36px;
+    }
+
+    .code-explain {
+        background: #f7fbff;
+        border-left: 4px solid var(--accent);
+        padding: 14px;               /* more breathing room */
+        border-radius: 8px;
+        margin-bottom: 16px;         /* extra spacing after explanation box */
+        color: #0b1724;
+    }
+
+    pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 16px;               /* slightly more padding */
+        border-radius: 10px;
+        overflow: auto;
+        font-size: 14px;
+        margin-bottom: 16px;         /* spacing after code blocks */
+    }
+    
+    footer{
+      margin-top:44px;text-align:center;color:var(--muted);font-size:14px;
+      padding:10px;
+    }
+    </style>
 </head>
 <body>
 <div class="container">
-  <header class="header">
-      <header>
+    <header>
     <a class="brand" href="#">
       <span class="logo">PS</span>
       <div>
@@ -55,10 +124,8 @@ nav{display:flex;gap:16px}
       </div>
     </a>
 
-  </header>
-    </a>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index.html">Back To Home</a>
     </nav>
   </header>
 
@@ -175,12 +242,14 @@ Get-Content C:\Users\YourUser\Desktop\yourlog.log -Tail 5
 Get-Content yourlog.log | more</pre>
   </section>
 
-  <footer class="footer">
-    © <span id="year"></span> PowerShell Learning — concise reference. &nbsp; <a href="/" style="color:var(--accent);text-decoration:none">Return to Home</a>
+  <footer>
+    © <span id="year"></span> PowerShell Academy — Educational Demo
   </footer>
 
 </div>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>

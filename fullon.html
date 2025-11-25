@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="sl-SI">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slovensko</title>
+    <link rel="icon" href="images.ico">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .grid{
+            display:grid;
+            grid-template-columns:1fr;
+            gap:18px;
+            margin-top:18px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <a class="brand" href="#">
+      <span class="logo">PS</span>
+      <div>
+        <div style="font-weight:700">PowerShell Academy</div>
+        <div style="font-size:12px;color:var(--muted)">Nauči se avtomacijo na pravi način</div>
+      </div>
+    </a>
+    <nav>
+      <a href="index.html">Nazaj domov</a>
+    </nav>
+    </header>
+
+    <div class="grid">
+
+        <!-- 1 -->
+        <div class="card">
+            <h3>1. Splošna pomoč & Get-WinEvent</h3>
+            <pre>Get-Help
+Get-Help Get-WinEvent</pre>
+        </div>
+
+        <!-- 2 -->
+        <div class="card">
+            <h3>2. Skrite datoteke na namizju</h3>
+            <pre>Get-ChildItem $env:USERPROFILE\Desktop -Hidden</pre>
+        </div>
+
+        <!-- 3 -->
+        <div class="card">
+            <h3>3. Izpis vseh ukazov</h3>
+            <pre>Get-Command</pre>
+        </div>
+
+        <!-- 4 -->
+        <div class="card">
+            <h3>4. Storitve z nizom "time"</h3>
+            <pre>Get-Service -Name *time*</pre>
+        </div>
+
+        <!-- 5 -->
+        <div class="card">
+            <h3>5. Samo delujoče storitve</h3>
+            <pre>Get-Service | Where-Object Status -eq "Running"</pre>
+        </div>
+
+        <!-- 6 -->
+        <div class="card">
+            <h3>6. Status & startup w32time</h3>
+            <pre>Get-Service -Name W32time | Select-Object Status, StartType</pre>
+        </div>
+
+        <!-- 7 -->
+        <div class="card">
+            <h3>7. Testni zagon W32time (WhatIf)</h3>
+            <pre>Start-Service -Name W32time -WhatIf</pre>
+        </div>
+
+        <!-- 8 -->
+        <div class="card">
+            <h3>8. Zagon, izpis in ustavitev W32time</h3>
+            <pre>Start-Service -Name W32time -Confirm
+Get-Service -Name W32time | Select-Object Name, Status, StartType
+Stop-Service -Name W32time -Confirm</pre>
+        </div>
+
+        <!-- 9 -->
+        <div class="card">
+            <h3>9. Ponovni zagon W32time</h3>
+            <pre>Restart-Service -Name W32time -Confirm</pre>
+        </div>
+
+        <!-- 10 -->
+        <div class="card">
+            <h3>10. Startup Disabled za w32time</h3>
+            <pre>Set-Service -Name W32time -StartupType Disabled -Confirm</pre>
+        </div>
+
+        <!-- 11 -->
+        <div class="card">
+            <h3>11. Ustavi, spremeni na Manual & izpiši</h3>
+            <pre>Stop-Service -Name W32time
+Set-Service -Name W32time -StartupType Manual
+Get-Service -Name W32time | Select-Object Name, Status, StartType</pre>
+        </div>
+
+        <!-- 12 -->
+        <div class="card">
+            <h3>12. Ime procesa Notepad++</h3>
+            <pre>Get-Process -Name notepad++ | Select-Object ProcessName</pre>
+        </div>
+
+        <!-- 13 -->
+        <div class="card">
+            <h3>13. Podatki o procesu Notepad++</h3>
+            <pre>Get-Process -Name notepad++ | Select-Object Id, WS, StartTime</pre>
+        </div>
+
+        <!-- 14 -->
+        <div class="card">
+            <h3>14. Procesi z manj kot 500 MB RAM</h3>
+            <pre>Get-Process | Where-Object { $_.WS -lt 500MB }</pre>
+        </div>
+
+        <!-- 15 -->
+        <div class="card">
+            <h3>15. Zapri Notepad++ po ID</h3>
+            <pre>Stop-Process -Id 12345 -Confirm</pre>
+        </div>
+
+        <!-- 16 -->
+        <div class="card">
+            <h3>16. Zagon Notepad++ z izbiro uporabnika</h3>
+            <pre>Start-Process notepad++ -Credential (Get-Credential)</pre>
+        </div>
+
+        <!-- 17 -->
+        <div class="card">
+            <h3>17. Podatki o fizičnih mrežnih karticah</h3>
+            <pre>Get-NetAdapter -Physical | Select-Object Name, Description, InterfaceIndex</pre>
+        </div>
+
+        <!-- 18 -->
+        <div class="card">
+            <h3>18. IPv4 naslov mrežne kartice</h3>
+            <pre>Get-NetAdapter -Physical |
+Get-NetIPAddress -AddressFamily IPv4 |
+Select-Object IPAddress</pre>
+        </div>
+
+        <!-- 19 -->
+        <div class="card">
+            <h3>19. MAC & hitrost mrežne kartice</h3>
+            <pre>Get-NetAdapter -Physical | Select-Object Name, MacAddress, LinkSpeed</pre>
+        </div>
+
+        <!-- 20 -->
+        <div class="card">
+            <h3>20. Ponovni zagon mrežne kartice</h3>
+            <pre>Restart-NetAdapter -Name "Ethernet" -Confirm -PassThru</pre>
+        </div>
+
+        <!-- 21 -->
+        <div class="card">
+            <h3>21. Vrste log datotek</h3>
+            <pre>Get-WinEvent -ListLog *</pre>
+        </div>
+
+        <!-- 22 -->
+        <div class="card">
+            <h3>22. Vnosi loga Security (paging)</h3>
+            <pre>Get-EventLog -LogName Security | Out-Host -Paging</pre>
+        </div>
+
+        <!-- 23 -->
+        <div class="card">
+            <h3>23. Zadnjih 10 vnosov Security</h3>
+            <pre>Get-EventLog -LogName Security -Newest 10</pre>
+        </div>
+
+        <!-- 24 -->
+        <div class="card">
+            <h3>24. Zadnjih 5 vnosov Security (tabela)</h3>
+            <pre>Get-EventLog -LogName Security -Newest 5 |
+Select-Object Index, TimeWritten, EntryType, InstanceId, Message |
+Format-Table -AutoSize</pre>
+        </div>
+
+        <!-- 25 -->
+        <div class="card">
+            <h3>25. FailureAudit vnosi</h3>
+            <pre>Get-EventLog -LogName Security -EntryType FailureAudit</pre>
+        </div>
+
+        <!-- 26 -->
+        <div class="card">
+            <h3>26. Branje vegova.log</h3>
+            <pre>Get-Content "$env:USERPROFILE\Desktop\vegova.log"
+Get-Content "$env:USERPROFILE\Desktop\vegova.log" -TotalCount 2
+Get-Content "$env:USERPROFILE\Desktop\vegova.log" -Tail 2</pre>
+        </div>
+
+    <footer>
+    © <span id="year"></span> PowerShell Academy — Educational Demo
+    </footer>
+
+</div>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

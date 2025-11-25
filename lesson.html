@@ -4,114 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PowerShell Academy Journey</title>
-
+<link rel="icon" href="images.ico">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css">
 
-<style>
-    :root{
-      --bg:#f6f8fb;
-      --card:#ffffff;
-      --muted:#6b7280;
-      --accent:#0ea5e9;
-      --accent-2:#3b82f6;
-      --radius:12px;
-      --max-width:950px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, sans-serif;
-      background:linear-gradient(180deg,#f9fcff, var(--bg));
-      color:#0f172a;
-      line-height:1.45;
-    }
-    .container{
-      max-width:var(--max-width);
-      margin:40px auto;
-      padding:0 20px;
-    }
-    header{
-      display:flex;justify-content:space-between;align-items:center;
-      margin-bottom:24px;
-    }
-    .brand{
-      display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;
-    }
-    .logo{
-      width:44px;height:44px;border-radius:10px;
-      background:linear-gradient(135deg,var(--accent),var(--accent-2));
-      display:grid;place-items:center;color:white;font-weight:700;font-size:18px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.12);
-    }
-    nav{display:flex;gap:16px}
-    nav a{
-      text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;
-      padding:8px 10px;border-radius:8px;
-    }
-    nav a:hover{color:var(--accent);background:rgba(14,165,233,0.08)}
-
-    h1{font-size:34px;margin:10px 0}
-    h2{margin-top:34px;font-size:26px}
-    p.lead{color:var(--muted);font-size:16px;max-width:70ch}
-
-    .card {
-    background: var(--card);
-    padding: 24px;               /* More padding inside cards */
-    border-radius: var(--radius);
-    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08); /* stronger shadow for depth */
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin-bottom: 24px;         /* spacing between cards */
-    }
-
-    .card h2 {
-    margin-top: 0;      /* remove top margin inside cards */
-    margin-bottom: 16px; /* keep some spacing below */
-    font-size: 26px;
-    }
-    .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 24px;                   /* more space between grid items */
-        margin-top: 24px;
-    }
-
-    .hero {
-        background: var(--card);
-        padding: 28px;               /* slightly more padding */
-        border-radius: var(--radius);
-        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08); /* softer but noticeable shadow */
-        margin-bottom: 36px;
-    }
-
-    .code-explain {
-        background: #f7fbff;
-        border-left: 4px solid var(--accent);
-        padding: 14px;               /* more breathing room */
-        border-radius: 8px;
-        margin-bottom: 16px;         /* extra spacing after explanation box */
-        color: #0b1724;
-    }
-
-    pre {
-        background: #0f172a;
-        color: #e2e8f0;
-        padding: 16px;               /* slightly more padding */
-        border-radius: 10px;
-        overflow: auto;
-        font-size: 14px;
-        margin-bottom: 16px;         /* spacing after code blocks */
-    }
-    
-    footer{
-      margin-top:44px;text-align:center;color:var(--muted);font-size:14px;
-      padding:10px;
-    }
-    </style>
 </head>
 <body>
 <div class="container">
@@ -147,6 +43,8 @@ Get-Help</pre>
     <p>Check PowerShell version and get help for commands:</p>
     <pre>$PSVersionTable
 Get-Help Get-ChildItem</pre>
+    <p>List files including ONLY hidden:</p>
+    <pre>Get-ChildItem -Hidden</pre>
     <p>List files including hidden:</p>
     <pre>Get-ChildItem -Force</pre>
   </section>
@@ -164,10 +62,17 @@ Get-Command Get-ChildItem</pre>
     <h2>Managing Services</h2>
     <div class="code-explain">Services have states such as <em>Running</em>, <em>Stopped</em>, and <em>Paused</em>. Use <code>Get-Service</code> to list and query services, and pipe output to filter or select properties.</div>
     <pre>Get-Service
-Get-Service *time*
-Get-Service | Where-Object {$_.Status -eq "Running"}
+Get-Service -Name *time*
+</pre>
+    <div class="code-explain">You have multiple choices for selecting services:</div>
+    <pre>
+Get-Service | Where-Object {$_.Status -eq "Running"} OR 
+Get-Service | Where-Object -Property Status -eq "Running"
+    </pre>
+    <div class="code-explain">Example for selecting multiple items</div>
+    <pre>
 Get-Service | Select-Object Name, StartType
-Get-Service *w32time* | Select-Object Name, Status, StartType</pre>
+Get-Service -Name *w32time* | Select-Object Name, Status, StartType</pre>
   </section>
 
   <!-- Service control -->
@@ -176,8 +81,9 @@ Get-Service *w32time* | Select-Object Name, Status, StartType</pre>
     <div class="code-explain">Before changing services, use <code>-WhatIf</code> to simulate the action. Use <code>-Confirm</code> to prompt for confirmation.</div>
     <pre>Start-Service -Name w32time -WhatIf
 Start-Service -Name w32time -Confirm
-Get-Service w32time
-Stop-Service w32time -Confirm
+Get-Service -Name w32time | Select-Object Name, Status
+Get-Service -Name w32time
+Stop-Service -Name w32time -Confirm
 Restart-Service -Name w32time -Confirm</pre>
   </section>
 
@@ -185,10 +91,10 @@ Restart-Service -Name w32time -Confirm</pre>
   <section class="card">
     <h2>Service Startup Types</h2>
     <div class="code-explain">Startup types determine whether a service starts automatically, manually, or is disabled.</div>
-    <pre>Set-Service w32time -StartupType Disabled
-Set-Service w32time -StartupType Automatic -Confirm
+    <pre>Set-Service -Name w32time -StartupType Disabled
+Set-Service -Name w32time -StartupType Automatic -Confirm
 Set-Service -Name w32time -Status Stopped -StartupType Manual -PassThru
-Get-Service w32time | Select-Object Name, DisplayName, Status, StartType</pre>
+Get-Service -Name w32time | Select-Object Name, DisplayName, Status, StartType</pre>
   </section>
 
   <!-- Processes -->
@@ -196,9 +102,9 @@ Get-Service w32time | Select-Object Name, DisplayName, Status, StartType</pre>
     <h2>Process Management</h2>
     <div class="code-explain">List processes, filter by resource usage, and stop or retrieve details for specific processes.</div>
     <pre>Get-Process
-Get-Process notepad++
-Get-Process *note*
-Get-Process notepad++ | Select-Object Name, ID, WS, StartTime
+Get-Process -Name notepad++
+Get-Process -Name *note*
+Get-Process -Name notepad++ | Select-Object Name, ID, WS, StartTime
 Get-Process | Where-Object {$_.WS -gt 250MB}
 Stop-Process -Name notepad++
 Stop-Process -Id 2180 -Confirm

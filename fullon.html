@@ -117,7 +117,9 @@ Stop-Service -Name W32time -Confirm</pre>
         <!-- 14 -->
         <div class="card">
             <h3>14. Procesi z manj kot 500 MB RAM</h3>
-            <pre>Get-Process | Where-Object { $_.WS -lt 500MB }</pre>
+            <pre>Get-Process | Where-Object { $_.WS -lt 500MB } ALI
+Get-Process | Where-Object -Property WS -lt 500MB
+</pre>
         </div>
 
         <!-- 15 -->
@@ -129,7 +131,9 @@ Stop-Service -Name W32time -Confirm</pre>
         <!-- 16 -->
         <div class="card">
             <h3>16. Zagon Notepad++ z izbiro uporabnika</h3>
-            <pre>Start-Process notepad++ -Credential (Get-Credential)</pre>
+            <pre>Start-Process notepad++ -Credential (Get-Credential) ALI
+Start-Process "notepad++" -Verb RunAsUser
+</pre>
         </div>
 
         <!-- 17 -->
@@ -161,13 +165,17 @@ Select-Object IPAddress</pre>
         <!-- 21 -->
         <div class="card">
             <h3>21. Vrste log datotek</h3>
-            <pre>Get-WinEvent -ListLog * | Select-Object LogName, LogMode</pre>
+            <pre>Get-WinEvent -ListLog * | Select-Object LogName, LogMode ALI
+Get-EventLog -List | Select -Property Log
+</pre>
         </div>
 
         <!-- 22 -->
         <div class="card">
             <h3>22. Vnosi loga Security (paging)</h3>
-            <pre>Get-EventLog -LogName Security | Out-Host -Paging</pre>
+            <pre>Get-EventLog -LogName Security | Out-Host -Paging ALI
+Get-EventLog -LogName System | more
+</pre>
         </div>
 
         <!-- 23 -->
@@ -196,6 +204,7 @@ Format-Table -AutoSize</pre>
             <pre>Get-Content "$env:USERPROFILE\Desktop\vegova.log"
 Get-Content "$env:USERPROFILE\Desktop\vegova.log" -TotalCount 2
 Get-Content "$env:USERPROFILE\Desktop\vegova.log" -Tail 2</pre>
+            <pre>Add-Content -Path "$env:USERPROFILE\Desktop\vegova.log" -Value "besedilo"</pre>
         </div>
 
     <footer>

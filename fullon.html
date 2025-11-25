@@ -99,9 +99,7 @@ Stop-Service -Name W32time -Confirm</pre>
         <!-- 11 -->
         <div class="card">
             <h3>11. Ustavi, spremeni na Manual & izpiši</h3>
-            <pre>Stop-Service -Name W32time
-Set-Service -Name W32time -StartupType Manual
-Get-Service -Name W32time | Select-Object Name, Status, StartType</pre>
+            <pre>Set-Service -Name w32time -Status Stopped -StartupType Manual -PassThru</pre>
         </div>
 
         <!-- 12 -->
@@ -163,7 +161,7 @@ Select-Object IPAddress</pre>
         <!-- 21 -->
         <div class="card">
             <h3>21. Vrste log datotek</h3>
-            <pre>Get-WinEvent -ListLog *</pre>
+            <pre>Get-WinEvent -ListLog * | Select-Object LogName, LogMode</pre>
         </div>
 
         <!-- 22 -->
@@ -194,7 +192,7 @@ Format-Table -AutoSize</pre>
 
         <!-- 26 -->
         <div class="card">
-            <h3>26. Branje vegova.log</h3>
+            <h3>26. Branje log datotek</h3>
             <pre>Get-Content "$env:USERPROFILE\Desktop\vegova.log"
 Get-Content "$env:USERPROFILE\Desktop\vegova.log" -TotalCount 2
 Get-Content "$env:USERPROFILE\Desktop\vegova.log" -Tail 2</pre>

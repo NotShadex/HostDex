@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PowerShell Academy Journey</title>
+<link rel="icon" href="images.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+<div class="container">
+    <header>
+    <a class="brand" href="#">
+      <span class="logo">PS</span>
+      <div>
+        <div style="font-weight:700">PowerShell Academy</div>
+        <div style="font-size:12px;color:var(--muted)">Learn automation the right way</div>
+      </div>
+    </a>
+
+    <nav>
+      <a href="index.html">Back To Home</a>
+    </nav>
+  </header>
+
+  <!-- Intro card -->
+  <section class="card">
+    <h2>Introduction</h2>
+    <p>A concise, practical reference for learning PowerShell. Each section contains a short explanation followed by example commands you can run in the PowerShell console. Run PowerShell as Administrator when a command requires elevated privileges.</p>
+  </section>
+
+  <!-- Basics -->
+  <section id="basics" class="card">
+    <h2>PowerShell Basics</h2>
+    <div class="code-explain">Cmdlets are the basic commands in PowerShell. They follow a <strong>Verb-Noun</strong> pattern (for example, <code>Get-Process</code>). PowerShell works with objects rather than plain text, which enables piping and structured queries.</div>
+    <p>Common informational cmdlets:</p>
+    <pre>Get-Verb
+Get-Command
+Get-Member
+Get-Help</pre>
+    <p>Check PowerShell version and get help for commands:</p>
+    <pre>$PSVersionTable
+Get-Help Get-ChildItem</pre>
+    <p>List files including ONLY hidden:</p>
+    <pre>Get-ChildItem -Hidden</pre>
+    <p>List files including hidden:</p>
+    <pre>Get-ChildItem -Force</pre>
+  </section>
+
+  <!-- System inspection -->
+  <section id="system" class="card">
+    <h2>System Inspection</h2>
+    <div class="code-explain">Use these commands to discover available commands and inspect specific cmdlet information.</div>
+    <pre>Get-Command
+Get-Command Get-ChildItem</pre>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="card">
+    <h2>Managing Services</h2>
+    <div class="code-explain">Services have states such as <em>Running</em>, <em>Stopped</em>, and <em>Paused</em>. Use <code>Get-Service</code> to list and query services, and pipe output to filter or select properties.</div>
+    <pre>Get-Service
+Get-Service -Name *time*
+</pre>
+    <div class="code-explain">You have multiple choices for selecting services:</div>
+    <pre>
+Get-Service | Where-Object {$_.Status -eq "Running"} OR 
+Get-Service | Where-Object -Property Status -eq "Running"
+    </pre>
+    <div class="code-explain">Example for selecting multiple items</div>
+    <pre>
+Get-Service | Select-Object Name, StartType
+Get-Service -Name *w32time* | Select-Object Name, Status, StartType</pre>
+  </section>
+
+  <!-- Service control -->
+  <section class="card">
+    <h2>Start / Stop / Restart Services</h2>
+    <div class="code-explain">Before changing services, use <code>-WhatIf</code> to simulate the action. Use <code>-Confirm</code> to prompt for confirmation.</div>
+    <pre>Start-Service -Name w32time -WhatIf
+Start-Service -Name w32time -Confirm
+Get-Service -Name w32time | Select-Object Name, Status
+Get-Service -Name w32time
+Stop-Service -Name w32time -Confirm
+Restart-Service -Name w32time -Confirm</pre>
+  </section>
+
+  <!-- Service startup types -->
+  <section class="card">
+    <h2>Service Startup Types</h2>
+    <div class="code-explain">Startup types determine whether a service starts automatically, manually, or is disabled.</div>
+    <pre>Set-Service -Name w32time -StartupType Disabled
+Set-Service -Name w32time -StartupType Automatic -Confirm
+Set-Service -Name w32time -Status Stopped -StartupType Manual -PassThru
+Get-Service -Name w32time | Select-Object Name, DisplayName, Status, StartType</pre>
+  </section>
+
+  <!-- Processes -->
+  <section id="processes" class="card">
+    <h2>Process Management</h2>
+    <div class="code-explain">List processes, filter by resource usage, and stop or retrieve details for specific processes.</div>
+    <pre>Get-Process
+Get-Process -Name notepad++
+Get-Process -Name *note*
+Get-Process -Name notepad++ | Select-Object Name, ID, WS, StartTime
+Get-Process | Where-Object {$_.WS -gt 250MB}
+Stop-Process -Name notepad++
+Stop-Process -Id 2180 -Confirm
+Get-Process notepad++ | Stop-Process</pre>
+  </section>
+
+  <!-- Start process -->
+  <section class="card">
+    <h2>Starting Applications</h2>
+    <div class="code-explain">Start processes either normally or elevated. <code>-Verb RunAs</code> requests elevation.</div>
+    <pre>Start-Process "C:\Program Files\Notepad++\notepad++.exe"
+Start-Process "C:\Program Files\Notepad++\notepad++.exe" -Verb RunAs
+Start-Process "C:\Program Files\Notepad++\notepad++.exe" -Verb RunAsUser</pre>
+  </section>
+
+  <!-- Network -->
+  <section id="network" class="card">
+    <h2>Network Adapters & IP</h2>
+    <div class="code-explain">Inspect adapters, physical devices, IP addresses and control adapter state.</div>
+    <pre>Get-NetAdapter
+Get-NetAdapter -Physical
+Get-NetIPAddress -AddressFamily IPv4
+Get-NetIPAddress -AddressFamily IPv6
+ipconfig /all
+Get-NetAdapter | Select Name, MacAddress, LinkSpeed
+Restart-NetAdapter -Name Ethernet -Confirm -PassThru
+Disable-NetAdapter -Name Ethernet -Confirm -PassThru
+Enable-NetAdapter -Name Ethernet -Confirm -PassThru</pre>
+  </section>
+
+  <!-- Event logs -->
+  <section id="logs" class="card">
+    <h2>Event Logs</h2>
+    <div class="code-explain">Query Windows event logs, filter by type and retrieve recent entries. Useful for troubleshooting.</div>
+    <pre>Get-EventLog -LogName System | more
+Get-EventLog -LogName System -Newest 20
+Get-EventLog -LogName System -Newest 2 | Select-Object Index, TimeWritten, EntryType, InstanceId, Message
+Get-EventLog -LogName System -EntryType Error,Information,FailureAudit,SuccessAudit,Warning
+Get-Content C:\Users\YourUser\Desktop\yourlog.log -TotalCount 5
+Get-Content C:\Users\YourUser\Desktop\yourlog.log -Tail 5
+Get-Content yourlog.log | more</pre>
+  </section>
+
+  <footer>
+    © <span id="year"></span> PowerShell Academy — Educational Demo
+  </footer>
+
+</div>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

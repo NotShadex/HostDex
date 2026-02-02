@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Blank Page</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <style>
         body {
             margin: 0;
@@ -11,25 +12,95 @@
             background: white;
             font-family: Arial, sans-serif;
         }
-
-        .hidden-message {
+        .parent {
             margin-top: 2500px; 
             text-align: center;
             font-size: 2rem;
             color: black;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        p, h1 {
+            text-align: center;    /*left/right/justify*/
+            letter-spacing: 3px;
+            word-spacing: 5px;
+        }
+        
+        #naslov {
+            font-size: 32px;
+            text-transform: uppercase;   /*lowercase/capitalize*/
+            color: red;
+            margin-bottom: 20px;
+        }
+        
+        .opis {
+            color: green;
+            padding: 20px;
+            margin: 20px;
+            background-color: lightblue;
+        
+            border: 2px solid green;
+            border-top: 2px solid purple;  /*bottom,left,right*/ 
+        
+            border-radius: 10px;
+            outline: 2px solid orange;
+        
+            padding-top: 10px;  /*bottom,left,right*/
+        }
+        
+        .opis p {
+            text-indent: 10px;
+            line-height: 1.5;
+        }
+        
+        .opis > p {
+            font-style: italic;   
+        }
+        
+        p:first-of-type {
+            text-decoration: underline;      /* line-through */
+        }
+        
+        button {
+            font-size: 16px;
+            font-family: Arial, sans-serif; 
+            font-style: italic;     /* bold */
+            padding: 10px;
+            margin: 20px;
+        
+            border: 2px solid green;
+            border-radius: 10px;
+        
+            background-color: lightblue;
+            background-image: url("slika.jpg");
+            background-repeat: no-repeat;    /* repeat */
+            background-attachment: fixed;    /* scroll */
+        
+            transition: all 0.3 ease; /* linear / ease-in-out */
+        }
+        
+        button:hover {
+            background-color: red;
+            transform: scale(1.1);
+        }
+        
+        ul {
+            list-style-type: circle;   /* square / none */
+        }
+        
+        table {
+            border-collapse: collapse;
         }
     </style>
 </head>
 <body>
-
-    <div class="hidden-message">
-        .hidden-message {
-            margin-top: 2500px; 
-            text-align: center;
-            font-size: 2rem;
-            color: black;
-        }
+    <div class="parent">
     </div>
-
 </body>
 </html>
+

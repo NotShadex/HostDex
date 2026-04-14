@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bash Academy — Master the Shell</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ff66'%3E%3Cpath d='M4 5h16v2H4V5zm0 4h16v2H4V9zm0 4h16v2H4v-2zm0 4h16v2H4v-2z'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <a class="brand" href="index.html">
+      <div class="logo">$></div>
+      <div class="brand-text">
+        <div><strong>Bash Academy</strong></div>
+        <div class="brand-sub">#!/bin/bash — automate like a wizard</div>
+      </div>
+    </a>
+    <nav>
+      <a href="#">Slovenian</a>
+      <a href="english.html">English</a>
+    </nav>
+  </header>
+
+  <footer>
+    © <span id="year"></span> Bash Academy — Unleash the terminal. <span style="color: #00ff66;">#!/bin/bash</span> forever.
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // optional: add a little console greet for bash lovers
+  console.log("%c🐚 Welcome to Bash Academy | type 'echo $SHELL' in your terminal", "color: #00ff66; font-size: 14px; font-family: monospace;");
+</script>
+</body>
+</html>

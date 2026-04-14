@@ -1,106 +1,166 @@
 <!DOCTYPE html>
-<html lang="sl-SI">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Blank Page</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 3000px; 
-            background: white;
-            font-family: Arial, sans-serif;
-        }
-        .parent {
-            margin-top: 2500px; 
-            text-align: center;
-            font-size: 2rem;
-            color: black;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        p, h1 {
-            text-align: center;    /*left/right/justify*/
-            letter-spacing: 3px;
-            word-spacing: 5px;
-        }
-        
-        #naslov {
-            font-size: 32px;
-            text-transform: uppercase;   /*lowercase/capitalize*/
-            color: red;
-            margin-bottom: 20px;
-        }
-        
-        .opis {
-            color: green;
-            padding: 20px;
-            margin: 20px;
-            background-color: lightblue;
-        
-            border: 2px solid green;
-            border-top: 2px solid purple;  /*bottom,left,right*/ 
-        
-            border-radius: 10px;
-            outline: 2px solid orange;
-        
-            padding-top: 10px;  /*bottom,left,right*/
-        }
-        
-        .opis p {
-            text-indent: 10px;
-            line-height: 1.5;
-        }
-        
-        .opis > p {
-            font-style: italic;   
-        }
-        
-        p:first-of-type {
-            text-decoration: underline;      /* line-through */
-        }
-        
-        button {
-            font-size: 16px;
-            font-family: Arial, sans-serif; 
-            font-style: italic;     /* bold */
-            padding: 10px;
-            margin: 20px;
-        
-            border: 2px solid green;
-            border-radius: 10px;
-        
-            background-color: lightblue;
-            background-image: url("slika.jpg");
-            background-repeat: no-repeat;    /* repeat */
-            background-attachment: fixed;    /* scroll */
-        
-            transition: all 0.3 ease; /* linear / ease-in-out */
-        }
-        
-        button:hover {
-            background-color: red;
-            transform: scale(1.1);
-        }
-        
-        ul {
-            list-style-type: circle;   /* square / none */
-        }
-        
-        table {
-            border-collapse: collapse;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bash Academy — Master the Shell</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ff66'%3E%3Cpath d='M4 5h16v2H4V5zm0 4h16v2H4V9zm0 4h16v2H4v-2zm0 4h16v2H4v-2z'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="parent">
+<div class="container">
+
+  <header>
+    <a class="brand" href="index.html">
+      <div class="logo">$></div>
+      <div class="brand-text">
+        <div><strong>Bash Academy</strong></div>
+        <div class="brand-sub">#!/bin/bash — automate like a wizard</div>
+      </div>
+    </a>
+    <nav>
+      <a href="#">Slovenian</a>
+      <a href="english.html">English</a>
+    </nav>
+  </header>
+
+  <!-- hero card -->
+  <div class="card" style="margin-bottom: 1rem;">
+    <div class="badge-bash">$ echo "welcome, hacker"</div>
+    <h1>Master Bash from the ground up</h1>
+    <p style="font-size: 1.05rem; color: #cdd9ff;">
+      A practical learning hub designed to teach core <strong class="glow-text">Bash/Shell</strong> skills — from one-liners to full automation workflows.
+      Clear explanations, real-world scripts, and a terminal-first approach to help you think in pipelines.
+    </p>
+  </div>
+
+  <!-- essentials section -->
+  <section id="basics">
+    <h2>⚡ Start with the essentials</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>📟 Commands &amp; built-ins</h3>
+        <p class="muted">Bash commands are powerful executables or built-ins. Combine <code>ls</code>, <code>grep</code>, <code>awk</code> with pipes (<code>|</code>) for true magic.</p>
+        <pre style="margin-top: 12px;"><span class="bash-prompt">$></span> ls -la | grep ".sh"<br><span class="bash-prompt">$></span> echo "hello world" > output.txt</pre>
+      </div>
+
+      <div class="card">
+        <h3>🔗 Pipes &amp; Redirection</h3>
+        <p class="muted">Unleash the power of pipelines. Redirect stdout, stderr, and chain programs for complex data processing.</p>
+        <pre style="margin-top: 12px;"><span class="bash-prompt">$></span> ps aux | grep bash | wc -l<br><span class="bash-prompt">$></span> find . -name "*.log" 2>/dev/null</pre>
+      </div>
+
+      <div class="card">
+        <h3>📁 Navigating the filesystem</h3>
+        <p class="muted">Master <code>cd</code>, <code>pwd</code>, <code>mkdir</code>, <code>rm -rf</code> (carefully!) and glob patterns.</p>
+        <pre style="margin-top: 12px;"><span class="bash-prompt">$></span> cd /var/log && tail -f syslog<br><span class="bash-prompt">$></span> for d in */; do echo $d; done</pre>
+      </div>
     </div>
+  </section>
+
+  <!-- quick sneak peek with extended bash examples -->
+  <section id="example">
+    <h2>🐚 Quick sneak peek — Bash in action</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>📜 Essential Bash Snippets</h3>
+        <p class="muted">Real commands to kickstart your shell scripting journey. Each snippet follows bash best practices.</p>
+        <pre>
+<span class="bash-prompt">$></span> # List all files with details
+<span class="bash-prompt">$></span> ls -lah --color=auto
+
+<span class="bash-prompt">$></span> # Show running processes (bash-centric)
+<span class="bash-prompt">$></span> ps -ef | grep -E "bash|zsh"
+
+<span class="bash-prompt">$></span> # Monitor disk usage
+<span class="bash-prompt">$></span> df -h | grep '^/dev'
+
+<span class="bash-prompt">$></span> # Find commands by keyword in PATH
+<span class="bash-prompt">$></span> compgen -c | grep 'net'
+
+<span class="bash-prompt">$></span> # Filter processes using awk
+<span class="bash-prompt">$></span> ps aux | awk '$3 > 2.0 {print $2, $11}'
+
+<span class="bash-prompt">$></span> # one-liner loop: backup configs
+<span class="bash-prompt">$></span> for f in *.conf; do cp "$f" "${f}.bak"; done
+        </pre>
+      </div>
+      <div class="card">
+        <h3>🧪 Variables &amp; conditionals</h3>
+        <p class="muted">Bash scripting fundamentals: variables, test brackets, and exit codes.</p>
+        <pre>
+<span class="bash-prompt">$></span> name="BashNinja"
+<span class="bash-prompt">$></span> echo "Hello, $name"
+
+<span class="bash-prompt">$></span> if [ -f "/etc/passwd" ]; then
+<span class="bash-prompt">  ></span>    echo "passwd exists"
+<span class="bash-prompt">  ></span> fi
+
+<span class="bash-prompt">$></span> # command substitution
+<span class="bash-prompt">$></span> today=$(date +%Y-%m-%d)
+<span class="bash-prompt">$></span> echo "backup-$today.tar.gz"
+        </pre>
+      </div>
+      <div class="card">
+        <h3>⚙️ Functions &amp; automation</h3>
+        <p class="muted">Create reusable functions and schedule scripts with cron.</p>
+        <pre>
+<span class="bash-prompt">$></span> greet() { echo "⚡ Bash is $1"; }
+<span class="bash-prompt">$></span> greet "powerful"
+
+<span class="bash-prompt">$></span> # cron-style backup alias
+<span class="bash-prompt">$></span> alias backup_home='tar -czf backup.tar.gz ~/Documents'
+
+<span class="bash-prompt">$></span> # exit on error
+<span class="bash-prompt">$></span> set -e; ./deploy.sh || echo "failed"
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- additional Bash culture: scripting tip -->
+  <div class="card" style="margin: 2rem 0 1rem 0;">
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+      <div>
+        <h3 style="margin-bottom: 6px;">📘 Shebang &amp; portability</h3>
+        <p class="muted">Start every script with <code>#!/usr/bin/env bash</code> for robust execution across environments. Combine with <code>set -euo pipefail</code> for bulletproof scripts.</p>
+      </div>
+      <div style="background: #0b0e12; border-radius: 12px; padding: 8px 12px;">
+        <code style="background: none;">$ bash --version | head -1</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- extra: grid of bash resources -->
+  <div class="grid" style="margin-top: 24px;">
+    <div class="card">
+      <h3>📦 Package management (apt/brew)</h3>
+      <p class="muted">Learn to manage tools natively — <code>apt install</code> or <code>brew install</code> for Linux/macOS.</p>
+      <pre><span class="bash-prompt">$></span> sudo apt update && sudo apt install neofetch<br><span class="bash-prompt">$></span> neofetch</pre>
+    </div>
+    <div class="card">
+      <h3>📝 Environment &amp; dotfiles</h3>
+      <p class="muted">Customize your <code>.bashrc</code>, <code>.profile</code>, or <code>.bash_aliases</code>. Boost your terminal game.</p>
+      <pre><span class="bash-prompt">$></span> alias ll='ls -alF'<br><span class="bash-prompt">$></span> export PATH="$HOME/bin:$PATH"</pre>
+    </div>
+    <div class="card">
+      <h3>🧹 Text processing power</h3>
+      <p class="muted">sed, awk, cut, sort — the classic Unix text tools. Extract logs, transform CSV.</p>
+      <pre><span class="bash-prompt">$></span> cat access.log | awk '{print $1}' | sort | uniq -c</pre>
+    </div>
+  </div>
+
+  <footer>
+    © <span id="year"></span> Bash Academy — Unleash the terminal. <span style="color: #00ff66;">#!/bin/bash</span> forever.
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // optional: add a little console greet for bash lovers
+  console.log("%c🐚 Welcome to Bash Academy | type 'echo $SHELL' in your terminal", "color: #00ff66; font-size: 14px; font-family: monospace;");
+</script>
 </body>
 </html>
-

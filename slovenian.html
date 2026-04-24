@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bash Academy — VARN praktične naloge</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ff66'%3E%3Cpath d='M4 5h16v2H4V5zm0 4h16v2H4V9zm0 4h16v2H4v-2zm0 4h16v2H4v-2z'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ----- BASH THEME: BLACK + NEON GREEN ACCENTS ----- */
+    :root {
+      --bg-dark: #0a0c0f;
+      --bg-elevated: #0f1115;
+      --card-bg: #111318;
+      --border-dim: #1e2128;
+      --text-primary: #eef2ff;
+      --text-secondary: #9ca3af;
+      --bash-green: #00ff66;
+      --bash-green-glow: #00cc55;
+      --bash-green-dim: #1f3a2a;
+      --accent-muted: #2a3a2e;
+      --danger-red: #ff4444;
+      --radius: 14px;
+      --max-width: 1200px;
+      --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    /* subtle grid pattern (bash-like terminal texture) */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image: 
+        linear-gradient(rgba(0, 255, 102, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 102, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 32px auto;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    /* header & brand */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-dim);
+      padding-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .brand:hover .logo {
+      box-shadow: 0 0 12px var(--bash-green);
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #0f2120, #0a1210);
+      border: 1.5px solid var(--bash-green);
+      display: grid;
+      place-items: center;
+      color: var(--bash-green);
+      font-weight: 800;
+      font-size: 26px;
+      font-family: var(--mono);
+      text-shadow: 0 0 4px rgba(0,255,102,0.5);
+      transition: box-shadow 0.2s, transform 0.1s;
+    }
+
+    .brand-text {
+      line-height: 1.3;
+    }
+
+    .brand-text strong {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #eef2ff, var(--bash-green));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: var(--mono);
+    }
+
+    nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 8px 16px;
+      border-radius: 40px;
+      transition: all 0.2s ease;
+      background: rgba(0, 255, 102, 0.02);
+      border: 1px solid transparent;
+    }
+
+    nav a:hover {
+      color: var(--bash-green);
+      background: rgba(0, 255, 102, 0.08);
+      border-color: rgba(0, 255, 102, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* cards and containers */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      border: 1px solid var(--border-dim);
+      transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(2px);
+      margin-bottom: 1.5rem;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--bash-green-dim);
+      box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 255, 102, 0.1);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #ffffff, var(--bash-green));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin: 2rem 0 1.5rem 0;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      border-left: 4px solid var(--bash-green);
+      padding-left: 1rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* En stolpec - full width cards */
+    .exercises-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin: 1.8rem 0;
+    }
+
+    pre {
+      background: #05070a;
+      color: #d4ffd4;
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      line-height: 1.55;
+      border-left: 3px solid var(--bash-green);
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.3);
+      margin-top: 0.75rem;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    pre:hover {
+      background: #0a0e12;
+    }
+
+    .copy-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0, 255, 102, 0.15);
+      border: 1px solid rgba(0, 255, 102, 0.3);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 0.7rem;
+      font-family: monospace;
+      color: var(--bash-green);
+      cursor: pointer;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      font-weight: 500;
+    }
+
+    .copy-icon:hover {
+      background: var(--bash-green);
+      color: #0a0c0f;
+      border-color: var(--bash-green);
+    }
+
+    .code-wrapper {
+      position: relative;
+    }
+
+    .question-text {
+      color: #cdd9ff;
+      font-weight: 500;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .question-number {
+      color: var(--bash-green);
+      font-weight: 700;
+      font-size: 1.3rem;
+      font-family: var(--mono);
+    }
+
+    code {
+      font-family: var(--mono);
+      background: rgba(0, 255, 102, 0.12);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #b3ffcf;
+    }
+
+    .bash-prompt {
+      color: var(--bash-green);
+      user-select: none;
+    }
+
+    footer {
+      margin-top: 3.5rem;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border-dim);
+      padding-top: 1.8rem;
+      font-family: var(--mono);
+    }
+
+    .badge-bash {
+      display: inline-block;
+      background: rgba(0, 255, 102, 0.12);
+      border-radius: 30px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--bash-green);
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 4px rgba(0,255,102,0.3);
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--bash-green);
+      color: #0a0c0f;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      .logo { width: 44px; height: 44px; font-size: 22px; }
+      .brand-text strong { font-size: 1.2rem; }
+      .card { padding: 1.2rem; }
+      h3 { font-size: 1rem; }
+      .question-number { font-size: 1.1rem; }
+    }
+
+    ::selection {
+      background: var(--bash-green);
+      color: #0a0c0f;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <a class="brand" href="index.html">
+      <div class="logo">$></div>
+      <div class="brand-text">
+        <div><strong>Bash Academy</strong></div>
+        <div class="brand-sub">#!/bin/bash — automate like a wizard</div>
+      </div>
+    </a>
+    <nav>
+      <a href="slovenian.html">Slovenian</a>
+      <a href="english.html">English</a>
+    </nav>
+  </header>
+
+  <h2>🐚 Linux praktične naloge</h2>
+  <div class="exercises-list" id="exercises-list"></div>
+
+  <footer>
+    © <span id="year"></span> Bash Academy — Unleash the terminal. <span style="color: #00ff66;">#!/bin/bash</span> forever.
+  </footer>
+</div>
+
+<div id="toast" class="toast-msg">📋 Kopirano!</div>
+
+<script>
+  // Podatki o nalogah (vprašanja in odgovori) - brez točk
+  const exercises = [
+    { num: 1, text: "S pomočjo ukaza, izpiši pomoč za ukaz »ls«.", answer: "man ls" },
+    { num: 2, text: "S pomočjo ukaza, izpiši oz. odpri dokumentacijo za ukaz »ls«.", answer: "info ls" },
+    { num: 3, text: "S pomočjo ukaza, posodobi repozitorij.", answer: "sudo apt update" },
+    { num: 4, text: "S pomočjo ukaza, izpiši vse storitve ki tečejo v sistemu.", answer: "systemctl list-units --type=service" },
+    { num: 5, text: "S pomočjo ukaza, izpiši samo aktivne storitve.", answer: "systemctl list-units --type=service --state=running" },
+    { num: 6, text: "S pomočjo ukaza, namesti storitev »ufw«.", answer: "sudo apt install ufw -y" },
+    { num: 7, text: "S pomočjo ukaza, storitev »ufw« zaženi in dodaj v začetni zagon.", answer: "sudo systemctl start ufw && sudo systemctl enable ufw" },
+    { num: 8, text: "S pomočjo ukaza, izpiši status (Name, Description, Loaded, Active, PID) za storitev »ufw«.", answer: "systemctl status ufw" },
+    { num: 9, text: "S pomočjo ukaza, storitev »ufw« ustavi in odstrani iz začetnega zagona.", answer: "sudo systemctl stop ufw && sudo systemctl disable ufw" },
+    { num: 10, text: "S pomočjo ukaza, ponovno zaženi storitev »ufw«.", answer: "sudo systemctl restart ufw" },
+    { num: 11, text: "S pomočjo ukaza, izpiši vse procese ki tečejo v sistemu.", answer: "ps aux" },
+    { num: 12, text: "Odpri aplikacijo »nano« in s pomočjo ukaza izpiši podatke (user, pid, %cpu, %mem, start, command) o procesu »nano«, s pomočjo »grep« ukaza.", answer: "ps -eo user,pid,pcpu,pmem,lstart,cmd | grep nano" },
+    { num: 13, text: "S pomočjo ukaza in PID št., zapri aplikacijo »nano«.", answer: "kill -9 [PID]" },
+    { num: 14, text: "S pomočjo ukaza, izpiši vsebino datoteke »ufw.conf«, ki je shranjena v mapi »/etc/ufw/«.", answer: "cat /etc/ufw/ufw.conf" },
+    { num: 15, text: "S pomočjo ukaza, izpiši naslednje podatke tvoje mrežne kartice (ime mrežne kartice, naslov IPv4, IPv6 in MAC).", answer: "ip a" },
+    { num: 16, text: "S pomočjo ukaza, namesti aplikacijo »openssh-server«.", answer: "sudo apt install openssh-server -y" },
+    { num: 17, text: "S pomočjo aplikacije »PuTTY« (protokol SSH), se poveži na Linux OS in s pomočjo ukaza za vzpostavljeno povezavo izpiši, kateri protokol (TCP, UDP) se uporablja, lokalni IPv4 naslov in vrata (port) in zunanji IPv4 naslov in vrata (port).", answer: "ss -tn | grep :22" }
+  ];
+
+  // Funkcija za prikaz toasta (obvestila)
+  function showToast() {
+    const toast = document.getElementById('toast');
+    toast.style.opacity = '1';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+    }, 1500);
+  }
+
+  // Funkcija za kopiranje teksta v odložišče
+  async function copyToClipboard(text, element) {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast();
+      // Dodamo vizualni feedback na elementu
+      const originalBorder = element.style.borderLeft;
+      element.style.borderLeft = '3px solid #ffffff';
+      setTimeout(() => {
+        element.style.borderLeft = originalBorder;
+      }, 200);
+    } catch (err) {
+      console.error('Napaka pri kopiranju: ', err);
+      // Fallback za starejše brskalnike
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast();
+    }
+  }
+
+  // Funkcija za escape HTML
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // Ustvarjanje kartic - vsaka v svoji vrsti (full width)
+  function renderExercises() {
+    const container = document.getElementById('exercises-list');
+    container.innerHTML = '';
+
+    exercises.forEach(ex => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      // Header z vprašanjem
+      const questionHeader = document.createElement('h3');
+      questionHeader.innerHTML = `
+        <span class="question-number">${ex.num}.</span>
+        <span class="question-text">${escapeHtml(ex.text)}</span>
+      `;
+      
+      // Wrapper za kodo s kopirno ikono
+      const codeWrapper = document.createElement('div');
+      codeWrapper.className = 'code-wrapper';
+      
+      const pre = document.createElement('pre');
+      const cleanAnswer = ex.answer;
+      // Prikažemo z zelenim promptom
+      pre.innerHTML = `<span class="bash-prompt">$></span> ${escapeHtml(cleanAnswer)}`;
+      
+      // Ustvarimo kopirno ikono
+      const copyIcon = document.createElement('div');
+      copyIcon.className = 'copy-icon';
+      copyIcon.innerHTML = '📋 Kopiraj';
+      copyIcon.title = 'Klikni za kopiranje ukaza';
+      
+      // Klik na ikono kopira ukaz
+      copyIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        copyToClipboard(cleanAnswer, pre);
+      });
+      
+      // Klik na pre element tudi kopira
+      pre.addEventListener('click', (e) => {
+        // Če je klik na ikono ne dvojno sproži
+        if (e.target === copyIcon || copyIcon.contains(e.target)) return;
+        copyToClipboard(cleanAnswer, pre);
+      });
+      
+      codeWrapper.appendChild(pre);
+      codeWrapper.appendChild(copyIcon);
+      
+      card.appendChild(questionHeader);
+      card.appendChild(codeWrapper);
+      
+      container.appendChild(card);
+    });
+  }
+
+  // Leto za footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+  
+  // Render nalog
+  renderExercises();
+  
+  // Konzola za hec
+  console.log("%c🐚 Bash Academy | VARN naloge - klikni na ukaz za kopiranje!", "color: #00ff66; font-size: 14px; font-family: monospace;");
+</script>
+</body>
+</html>

@@ -347,6 +347,23 @@
       background: var(--bash-green);
       color: #0a0c0f;
     }
+
+    img {
+      display: block;
+      width: 50%;
+      border-radius: 14px;
+      border: 3px solid var(--border-dim);
+      backdrop-filter: blur(2px);
+      transition: all 0.2s ease;
+      filter: brightness(0.95) contrast(1.05);
+      margin: auto;
+    }
+
+    img:hover {
+      transform: scale(1.02);
+      border-color: #00ff66;
+      box-shadow: 0 8px 20px rgba(0, 255, 102, 0.1);
+    }
   </style>
 </head>
 <body>
@@ -379,23 +396,23 @@
 <script>
   // Podatki o nalogah (vprašanja in odgovori) - brez točk
   const exercises = [
-    { num: 1, text: "S pomočjo ukaza, izpiši pomoč za ukaz »ls«.", answer: "man ls" },
-    { num: 2, text: "S pomočjo ukaza, izpiši oz. odpri dokumentacijo za ukaz »ls«.", answer: "info ls" },
+    { num: 1, text: "S pomočjo ukaza, izpiši pomoč za ukaz »ls«.", answer: "ls --help" },
+    { num: 2, text: "S pomočjo ukaza, izpiši oz. odpri dokumentacijo za ukaz »ls«.", answer: "man ls" },
     { num: 3, text: "S pomočjo ukaza, posodobi repozitorij.", answer: "sudo apt update" },
-    { num: 4, text: "S pomočjo ukaza, izpiši vse storitve ki tečejo v sistemu.", answer: "systemctl list-units --type=service" },
-    { num: 5, text: "S pomočjo ukaza, izpiši samo aktivne storitve.", answer: "systemctl list-units --type=service --state=running" },
-    { num: 6, text: "S pomočjo ukaza, namesti storitev »ufw«.", answer: "sudo apt install ufw -y" },
+    { num: 4, text: "S pomočjo ukaza, izpiši vse storitve ki tečejo v sistemu.", answer: "sudo systemctl --all" },
+    { num: 5, text: "S pomočjo ukaza, izpiši samo aktivne storitve.", answer: "sudo systemctl --state=active" },
+    { num: 6, text: "S pomočjo ukaza, namesti storitev »ufw«.", answer: "sudo apt install ufw" },
     { num: 7, text: "S pomočjo ukaza, storitev »ufw« zaženi in dodaj v začetni zagon.", answer: "sudo systemctl start ufw && sudo systemctl enable ufw" },
-    { num: 8, text: "S pomočjo ukaza, izpiši status (Name, Description, Loaded, Active, PID) za storitev »ufw«.", answer: "systemctl status ufw" },
+    { num: 8, text: "S pomočjo ukaza, izpiši status (Name, Description, Loaded, Active, PID) za storitev »ufw«.", answer: "sudo systemctl status ufw" },
     { num: 9, text: "S pomočjo ukaza, storitev »ufw« ustavi in odstrani iz začetnega zagona.", answer: "sudo systemctl stop ufw && sudo systemctl disable ufw" },
     { num: 10, text: "S pomočjo ukaza, ponovno zaženi storitev »ufw«.", answer: "sudo systemctl restart ufw" },
-    { num: 11, text: "S pomočjo ukaza, izpiši vse procese ki tečejo v sistemu.", answer: "ps aux" },
-    { num: 12, text: "Odpri aplikacijo »nano« in s pomočjo ukaza izpiši podatke (user, pid, %cpu, %mem, start, command) o procesu »nano«, s pomočjo »grep« ukaza.", answer: "ps -eo user,pid,pcpu,pmem,lstart,cmd | grep nano" },
-    { num: 13, text: "S pomočjo ukaza in PID št., zapri aplikacijo »nano«.", answer: "kill -9 [PID]" },
+    { num: 11, text: "S pomočjo ukaza, izpiši vse procese ki tečejo v sistemu.", answer: "sudo ps aux" },
+    { num: 12, text: "Odpri aplikacijo »nano« in s pomočjo ukaza izpiši podatke (user, pid, %cpu, %mem, start, command) o procesu »nano«, s pomočjo »grep« ukaza.", answer: "ps -eo user,pid,pcpu,pmem,lstart,cmd | grep nano && sudo ps -aux | grep nano" },
+    { num: 13, text: "S pomočjo ukaza in PID št., zapri aplikacijo »nano«.", answer: "kill [PID]" },
     { num: 14, text: "S pomočjo ukaza, izpiši vsebino datoteke »ufw.conf«, ki je shranjena v mapi »/etc/ufw/«.", answer: "cat /etc/ufw/ufw.conf" },
-    { num: 15, text: "S pomočjo ukaza, izpiši naslednje podatke tvoje mrežne kartice (ime mrežne kartice, naslov IPv4, IPv6 in MAC).", answer: "ip a" },
-    { num: 16, text: "S pomočjo ukaza, namesti aplikacijo »openssh-server«.", answer: "sudo apt install openssh-server -y" },
-    { num: 17, text: "S pomočjo aplikacije »PuTTY« (protokol SSH), se poveži na Linux OS in s pomočjo ukaza za vzpostavljeno povezavo izpiši, kateri protokol (TCP, UDP) se uporablja, lokalni IPv4 naslov in vrata (port) in zunanji IPv4 naslov in vrata (port).", answer: "ss -tn | grep :22" }
+    { num: 15, text: "S pomočjo ukaza, izpiši naslednje podatke tvoje mrežne kartice (ime mrežne kartice, naslov IPv4, IPv6 in MAC).", answer: "ip address && ifconfig" },
+    { num: 16, text: "S pomočjo ukaza, namesti aplikacijo »openssh-server«.", answer: "sudo apt-get install openssh-server" },
+    { num: 17, text: "S pomočjo aplikacije »PuTTY« (protokol SSH), se poveži na Linux OS in s pomočjo ukaza za vzpostavljeno povezavo izpiši, kateri protokol (TCP, UDP) se uporablja, lokalni IPv4 naslov in vrata (port) in zunanji IPv4 naslov in vrata (port).", answer: "sudo netstat -tulpa | grep ssh && sudo netstat -tulpa" }
   ];
 
   // Funkcija za prikaz toasta (obvestila)
@@ -490,6 +507,13 @@
       
       card.appendChild(questionHeader);
       card.appendChild(codeWrapper);
+      if (ex.num == 17) {
+        const img = document.createElement('img');
+        const img2 = document.createElement('img');
+        img.src = 'images/1.png'; img2.src = 'images/2.png';
+        img.alt = 'Linux terminal'; img2.alt = 'Linux terminal';
+        card.appendChild(img); card.appendChild(img2);
+      }
       
       container.appendChild(card);
     });
